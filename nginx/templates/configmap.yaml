@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-data
+data:
+  nginx.conf: |
+    events {
+      worker_connections 1024;
+    }
+    http {
+      server {
+        listen 80;
+        server_name localhost;
+        location / {
+            root   /srv/www/htdocs/;
+            index  index.html;
+        }
+      }
+    }
+  index.html: |
+    <html>
+    <head>
+      <title>Welcome to nginx!</title>
+      <link rel="preload" as="style" href="https://www.suse.com/assets/css/bootstrap.min.css?avs=1718114176" type="text/css" onload="this.rel='stylesheet'"  />
+    </head>
+    <body class="theme-default">
+      <h1>Success! The nginx web server in <b>{{ .Values.clusterEnv }}</b> is up and running!</h1>
+      <h2>Configured Domain: {{ .Values.ingress.host }}</h2>
+    </body>
+    </html>

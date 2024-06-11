@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sle15-nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: registry.suse.com/suse/nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/nginx
+        - name: htdocs-volume
+          mountPath: /srv/www/htdocs
+      volumes:
+      - name: config-volume
+        configMap:
+          name: nginx-data
+          items:
+          - key: nginx.conf
+            path: nginx.conf
+      - name: htdocs-volume
+        configMap:
+          name: nginx-data
+          items:
+          - key: index.html
+            path: index.html

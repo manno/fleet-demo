@@ -1,12 +1,12 @@
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
-  name: widgetfactory
+  name: nginx
   namespace: fleet-local
 spec:
   branch: main
   paths:
-  - widgetfactory
+  - nginx
   repo: https://github.com/manno/fleet-demo
   targets:
   - clusterSelector: {}

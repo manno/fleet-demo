@@ -1,0 +1,9 @@
+apiVersion: v2
+name: sle15-nginx
+description: A Helm chart for SLE nginx
+
+type: application
+
+version: 0.1.0
+
+appVersion: "0.0.1"

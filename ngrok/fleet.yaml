@@ -1,10 +1,67 @@
 defaultNamespace: ngrok-ingress-controller
+
 helm:
   releaseName: ngrok-ingress-controller
   repo: https://ngrok.github.io/kubernetes-ingress-controller
   chart: kubernetes-ingress-controller
   valuesFrom:
-  - secretKeyRef:
-      name: ngrok-creds
-      namespace: ngrok-ingress-controller
-      key: values.yaml
+    -
+      # This secret needs to be created on the target cluster
+      secretKeyRef:
+        name: ngrok-creds
+        namespace: ngrok-ingress-controller
+        key: values.yaml
+
+# fleet and ngrok conflict on managed-by label
+diff:
+  comparePatches:
+    -
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRole
+      name: httpsedge-editor-role
+      operations: [{"op": "remove", "path": "/metadata/labels"}]
+    -
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRole
+      name: httpsedge-viewer-role
+      operations: [ { "op": "remove", "path": "/metadata/labels" } ]
+    -
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRole
+      name: ippolicy-editor-role
+      operations: [ { "op": "remove", "path": "/metadata/labels" } ]
+    -
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRole
+      name: ippolicy-viewer-role
+      operations: [ { "op": "remove", "path": "/metadata/labels" } ]
+    -
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRole
+      name: tcpedge-editor-role
+      operations: [ { "op": "remove", "path": "/metadata/labels" } ]
+    -
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRole
+      name: tcpedge-viewer-role
+      operations: [ { "op": "remove", "path": "/metadata/labels" } ]
+    -
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRole
+      name: tlsedge-editor-role
+      operations: [ { "op": "remove", "path": "/metadata/labels" } ]
+    -
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRole
+      name: tlsedge-viewer-role
+      operations: [ { "op": "remove", "path": "/metadata/labels" } ]
+    -
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRole
+      name: ngrokmoduleset-editor-role
+      operations: [ { "op": "remove", "path": "/metadata/labels" } ]
+    -
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRole
+      name: ngrokmoduleset-viewer-role
+      operations: [ { "op": "remove", "path": "/metadata/labels" } ]
