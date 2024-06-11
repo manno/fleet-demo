@@ -1,0 +1,29 @@
+#Create K8s Namespace in-line with Helm chart deployment
+defaultNamespace: widget-factory
+
+# This diff accounts for sslip.io being used on the Ingress resource (the Fleet repo will get perpetually stuck in "Modified")
+# and can safely be removed if not using an Ingress, or if using a fixed host for the Ingress resource.
+diff:
+  comparePatches:
+  - apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    name: widgetfactory-chart-widgetfactory
+    namespace: widget-factory
+    operations:
+    - { "op": "remove", "path": "/spec/rules" }
+
+targetCustomizations:
+- name: cluster1
+  helm:
+    values:
+      ingress:
+        host: cluster1.rancher.manno.name
+  clusterSelector:
+    matchLabels:
+      env: dev
+      name: cluster1
+- clusterName: cluster2
+  helm:
+    values:
+      ingress:
+        host: cluster1.rancher.manno.name

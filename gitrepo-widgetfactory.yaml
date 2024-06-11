@@ -1,0 +1,12 @@
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: widgetfactory
+  namespace: fleet-local
+spec:
+  branch: main
+  paths:
+  - widgetfactory
+  repo: https://github.com/manno/fleet-demo
+  targets:
+  - clusterSelector: {}

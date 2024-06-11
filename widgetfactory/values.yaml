@@ -1,0 +1,26 @@
+widgetfactory:
+  image: ebauman/widgetfactory:v0.0.7
+  web:
+    servicePort: 80
+    containerPort: 8080
+  metrics:
+    servicePort: 9090
+    containerPort: 9090
+  serviceType: ClusterIP
+
+database:
+  image: mysql:latest
+  rootPassword: password
+  persistence:
+    enabled: false
+    storageClassName: standard
+    accessMode: ReadWriteOnce
+    size: 8Gi
+  service:
+    type: ClusterIP
+    containerPort: 3306
+    servicePort: 3306
+
+ingress:
+  enabled: true
+  host: sslip.io

@@ -1,0 +1,13 @@
+{{ if .Values.database.persistence.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-mysql
+spec:
+  accessModes:
+    - {{ .Values.database.persistence.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.databasepersistence.size }}
+  storageClassName: {{ .Values.database.persistence.storageClassName }}
+{{- end }}

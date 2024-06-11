@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      app: widget-factory
+      component: web-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: widget-factory
+        component: web-server
+    spec:
+      containers:
+        - name: widgetfactory
+          image: {{ .Values.widgetfactory.image }}
+          livenessProbe:
+            httpGet:
+              path: /widget
+              port: web
+            failureThreshold: 1
+            periodSeconds: 10
+            terminationGracePeriodSeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /widget
+              port: web
+            failureThreshold: 1
+            periodSeconds: 10
+          ports:
+            - containerPort: {{ .Values.widgetfactory.web.containerPort }}
+              name: web
+            - containerPort: {{ .Values.widgetfactory.metrics.containerPort }}
+              name: metrics
+          env:
+            - name: MYSQL_USER
+              value: root
+            - name: MYSQL_PASS
+              valueFrom:
+                secretKeyRef:
+                  key: mysql-root-password
+                  name: {{ .Release.Name }}-mysql
+            - name: MYSQL_HOST
+              value: {{ .Release.Name}}-mysql
+            - name: MYSQL_DB
+              value: {{ .Release.Name}}
+            - name: MYSQL_PORT
+              value: "3306"

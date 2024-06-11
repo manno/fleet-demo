@@ -1,0 +1,12 @@
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: ngrok
+  namespace: fleet-local
+spec:
+  branch: main
+  paths:
+  - ngrok
+  repo: https://github.com/manno/fleet-demo
+  targets:
+  - clusterSelector: {}
