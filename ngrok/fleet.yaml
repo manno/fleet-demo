@@ -1,0 +1,10 @@
+defaultNamespace: ngrok-ingress-controller
+helm:
+  releaseName: ngrok-ingress-controller
+  repo: https://ngrok.github.io/kubernetes-ingress-controller
+  chart: kubernetes-ingress-controller
+  valuesFrom:
+  - secretKeyRef:
+      name: ngrok-creds
+      namespace: ngrok-ingress-controller
+      key: values.yaml
