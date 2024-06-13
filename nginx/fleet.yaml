@@ -22,3 +22,19 @@ targetCustomizations:
     clusterSelector:
       matchLabels:
         management.cattle.io/cluster-display-name: demo22
+  -
+    helm:
+      values:
+        ingress:
+          host: cluster1.rancher.manno.name
+    clusterSelector:
+      matchLabels:
+        management.cattle.io/cluster-display-name: head3
+  -
+    helm:
+      values:
+        ingress:
+          host: cluster2.rancher.manno.name
+    clusterSelector:
+      matchLabels:
+        management.cattle.io/cluster-display-name: head4
