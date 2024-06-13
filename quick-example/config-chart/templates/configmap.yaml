@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}
 data:
-  fixedValue: "declarative from manifest"
+  fixedValue: "some important config change that needs to be audited"
   defaultChartValue:  {{ .Values.defaultChartValue }}
   fleetValue: {{ .Values.fleetValue }}
